@@ -20,6 +20,24 @@ class ANSGameMode : public AGameModeBase
 
 public:
 	ANSGameMode();
+	virtual void BeginPlay() override;
+	virtual void Tick(float DeltaSeconds) override;
+	virtual void PostLogin(APlayerController* NewPlayer) override;
+	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
+
+	void Respawn(class ANSCharacter* Character);
+	void Spawn(class ANSCharacter* Character);
+
+private:
+	TArray<class ANSCharacter*> RedTeam;
+	TArray<class ANSCharacter*> BlueTeam;
+
+	TArray<class ANSSpawnPoint*> RedSpawn;
+	TArray<class ANSSpawnPoint*> BlueSpawn;
+	TArray<class ANSCharacter*> ToBeSpawned;
+
+	bool bGameStarted;
+	static bool bInGameMenu;
 };
 
 
