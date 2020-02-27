@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerState.h"
-#include "NSGameMode.h"
+#include "NSSGameMode.h"
 #include "NSPlayerState.generated.h"
 
 /**

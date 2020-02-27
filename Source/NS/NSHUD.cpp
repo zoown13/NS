@@ -6,6 +6,11 @@
 #include "TextureResource.h"
 #include "CanvasItem.h"
 #include "UObject/ConstructorHelpers.h"
+#include "NSCharacter.h"
+#include "NSGameState.h"
+#include "NSSGameMode.h"
+#include "NSPlayerState.h"
+#include "Kismet/GameplayStatics.h"
 
 ANSHUD::ANSHUD()
 {
@@ -32,4 +37,56 @@ void ANSHUD::DrawHUD()
 	FCanvasTileItem TileItem( CrosshairDrawPosition, CrosshairTex->Resource, FLinearColor::White);
 	TileItem.BlendMode = SE_BLEND_Translucent;
 	Canvas->DrawItem( TileItem );
+
+	ANSGameState* thisGameState = Cast<ANSGameState>(GetWorld()->GetGameState());
+
+	if (thisGameState != nullptr&& thisGameState->bInMenu) {
+		int BlueScreenPos = 50;
+		int RedScreenPos = Center.Y + 50;
+		int nameSpacing = 25;
+		int NumBlueteam = 1;
+		int NumRedteam = 1;
+
+		FString thisString = "BLUE TEAM:";
+		DrawText(thisString, FColor::Cyan, 50, BlueScreenPos);
+
+		thisString = "RED TEAM";
+		DrawText(thisString, FColor::Red, 50, RedScreenPos);
+
+		for (auto player : thisGameState->PlayerArray) {
+			ANSPlayerState* thisPS = Cast<ANSPlayerState>(player);
+			if (thisPS) {
+				if (thisPS->Team == ETeam::BLUE_TEAM) {
+					thisString = FString::Printf(TEXT("%s"), *thisPS->GetPlayerName());
+					DrawText(thisString, FColor::Cyan, 50, BlueScreenPos + nameSpacing * NumBlueteam);
+					NumBlueteam++;
+				}
+				else {
+					thisString = FString::Printf(TEXT("%S"), *thisPS->GetPlayerName());
+					DrawText(thisString, FColor::Red, 50, RedScreenPos + nameSpacing * NumRedteam);
+					NumRedteam++;
+				}
+			}
+		}
+
+		if (GetWorld()->GetAuthGameMode()) {
+			thisString = "Press R to Start Game";
+			DrawText(thisString, FColor::Yellow, Center.X, Center.Y);
+		}
+		else {
+			thisString = "Waiting On Server!!";
+			DrawText(thisString, FColor::Yellow, Center.X, Center.Y);
+		}
+	}//(thisGameState != nullptr&&thisGameState->bInMenu)´Ý±â
+
+	else {
+		ANSCharacter* ThisChar = Cast<ANSCharacter>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
+		if (ThisChar != nullptr) {
+			if (ThisChar->GetNSPlayerState()) {
+				FString HUDString = FString::Printf(TEXT("Health: %f, Score: %.0f, Deaths: %d"), ThisChar->GetNSPlayerState()->Health,
+					ThisChar->GetNSPlayerState()->Score, ThisChar->GetNSPlayerState()->Deaths);
+				DrawText(HUDString, FColor::Yellow, 50, 50);
+			}
+		}
+	}
 }

@@ -1,6 +1,6 @@
-// Copyright 1998-2018 Epic Games, Inc. All Rights Reserved.
+// Fill out your copyright notice in the Description page of Project Settings.
 
-#include "NSGameMode.h"
+#include "NSSGameMode.h"
 #include "NSHUD.h"
 #include "NSCharacter.h"
 #include "UObject/ConstructorHelpers.h"
@@ -9,11 +9,10 @@
 #include "NSSpawnPoint.h"
 #include "EngineUtils.h"
 #include "NSGameState.h"
-#include "NSSGameMode.h"
 
-bool ANSGameMode::bInGameMenu = true;
+bool ANSSGameMode::bInGameMenu = true;
 
-ANSGameMode::ANSGameMode()
+ANSSGameMode::ANSSGameMode()
 	: Super()
 {
 	PrimaryActorTick.bCanEverTick = true;
@@ -31,7 +30,7 @@ ANSGameMode::ANSGameMode()
 	GameStateClass = ANSGameState::StaticClass();
 }
 
-void ANSGameMode::BeginPlay()
+void ANSSGameMode::BeginPlay()
 {
 	Super::BeginPlay();
 	if (Role == ROLE_Authority) {
@@ -55,7 +54,7 @@ void ANSGameMode::BeginPlay()
 	}
 }
 
-void ANSGameMode::Tick(float DeltaSeconds)
+void ANSSGameMode::Tick(float DeltaSeconds)
 {
 	if (Role == ROLE_Authority) {
 		APlayerController* thisCont = GetWorld()->GetFirstPlayerController();
@@ -73,7 +72,7 @@ void ANSGameMode::Tick(float DeltaSeconds)
 	}
 }
 
-void ANSGameMode::PostLogin(APlayerController * NewPlayer)
+void ANSSGameMode::PostLogin(APlayerController * NewPlayer)
 {
 	Super::PostLogin(NewPlayer);
 
@@ -106,14 +105,14 @@ void ANSGameMode::PostLogin(APlayerController * NewPlayer)
 	}
 }
 
-void ANSGameMode::EndPlay(const EEndPlayReason::Type EndPlayReason)
+void ANSSGameMode::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
 	if (EndPlayReason == EEndPlayReason::Quit || EndPlayReason == EEndPlayReason::EndPlayInEditor) {
 		bInGameMenu = true;
 	}
 }
 
-void ANSGameMode::Respawn(ANSCharacter * Character)
+void ANSSGameMode::Respawn(ANSCharacter * Character)
 {
 	if (Role == ROLE_Authority) {
 		AController* thisPC = Character->GetController();
@@ -136,7 +135,7 @@ void ANSGameMode::Respawn(ANSCharacter * Character)
 	}
 }
 
-void ANSGameMode::Spawn(ANSCharacter * Character)
+void ANSSGameMode::Spawn(ANSCharacter * Character)
 {
 	if (Role == ROLE_Authority) {
 		ANSSpawnPoint* thisSpawn = nullptr;
@@ -166,3 +165,6 @@ void ANSGameMode::Spawn(ANSCharacter * Character)
 		}
 	}
 }
+
+
+

@@ -231,7 +231,7 @@ void ANSCharacter::Respawn()
 	if (Role == ROLE_Authority) {
 		//게임 모드로부터 위치 얻기
 		NSPlayerState->Health = 100.0f;
-		Cast<ANSGameMode>(GetWorld()->GetAuthGameMode())->Respawn(this);
+		Cast<ANSSGameMode>(GetWorld()->GetAuthGameMode())->Respawn(this);
 
 		Destroy(true, true);
 	}

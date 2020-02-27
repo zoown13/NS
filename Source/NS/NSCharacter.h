@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "GameFramework/ForceFeedbackEffect.h"
-#include "NSGameMode.h"
+#include "NSSGameMode.h"
 #include "NSCharacter.generated.h"
 
 class UInputComponent;

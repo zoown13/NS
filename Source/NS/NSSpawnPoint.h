@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "NSGameMode.h"
+#include "NSSGameMode.h"
 #include "NSSpawnPoint.generated.h"
 
 UCLASS()

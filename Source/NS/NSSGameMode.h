@@ -1,20 +1,27 @@
-// Copyright 1998-2018 Epic Games, Inc. All Rights Reserved.
+// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/GameModeBase.h"
-#include "NSGameMode.generated.h"
+#include "GameFramework/GameMode.h"
+#include "NSSGameMode.generated.h"
 
+UENUM(BlueprintType)
+enum class ETeam : uint8 {
+	BLUE_TEAM,
+	RED_TEAM
+};
 
-
+/**
+ * 
+ */
 UCLASS(minimalapi)
-class ANSGameMode : public AGameModeBase
+class ANSSGameMode : public AGameMode
 {
 	GENERATED_BODY()
-
+	
 public:
-	ANSGameMode();
+	ANSSGameMode();
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaSeconds) override;
 	virtual void PostLogin(APlayerController* NewPlayer) override;
@@ -33,7 +40,6 @@ private:
 
 	bool bGameStarted;
 	static bool bInGameMenu;
+	
+	
 };
-
-
-
